@@ -1,3 +1,31 @@
+<?php
+if(isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+//    echo $username;
+//    echo $password;
+    $connection = mysqli_connect('localhost', 'root', '', 'loginapp');
+    if(!$connection) {
+      die('Connect Failed');
+    }
+    //Dùng dấu nháy kép với câu lệnh sql, trong nháy đơn có thể để string và biến
+    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    $result = mysqli_query($connection, $query);
+    if($result) {
+      echo 'Insert Done';
+    } else {
+        die('Insert Failed' . mysqli_error($connection));
+    }
+}
+
+
+?>
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,14 +39,14 @@
 <body>
     <div class="container">
       <div class="col-xs-6">
-        <form action="" method="post">
+        <form action="login.php" method="post">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control">
+            <input type="password" class="form-control" name="password">
           </div>
           <button type="submit" name="submit" class="mt-2 btn btn-primary">Submit</button>
         </form>
