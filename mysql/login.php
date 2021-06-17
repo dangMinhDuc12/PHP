@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
     if(!$connection) {
       die('Connect Failed');
     }
-    //Dùng dấu nháy kép với câu lệnh sql, trong nháy đơn có thể để string và biến
+    //Dùng dấu nháy kép với câu lệnh sql, dùng nháy đơn để đưa biến vào
     $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
     $result = mysqli_query($connection, $query);
     if($result) {

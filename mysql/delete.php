@@ -3,7 +3,7 @@ include "./db.php";
 include "./methods.php";
 
 if(isset($_POST['submit'])) {
-    updateData();
+  deleteData();
 }
 
 
@@ -23,23 +23,15 @@ if(isset($_POST['submit'])) {
 <body>
 <div class="container">
   <div class="col-xs-6">
-    <form action="update.php" method="post">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password">
-      </div>
+    <form action="delete.php" method="post">
       <div class="form-group mt-2">
         <select name="id" id="">
           <?php
-            showAllData();
+          showAllData();
           ?>
         </select>
       </div>
-      <button type="submit" name="submit" class="mt-2 btn btn-primary">Update</button>
+      <button type="submit" name="submit" class="mt-2 btn btn-primary">Delete</button>
     </form>
   </div>
 </div>
