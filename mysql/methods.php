@@ -1,4 +1,5 @@
 <?php
+//Có thể include html trong file php
 include "./db.php";
 
 function showAllData() {

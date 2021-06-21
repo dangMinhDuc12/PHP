@@ -4,12 +4,20 @@ if(isset($_POST['submit'])) {
     $password = $_POST['password'];
 //    echo $username;
 //    echo $password;
+  //SQL tự ngăn chặn các ký tự đặc biệt để tránh sql injection, cách để nhận các ký tự đặc biệt đó là sử dụng mysqli_real_escape_string()
     $connection = mysqli_connect('localhost', 'root', '', 'loginapp');
     if(!$connection) {
       die('Connect Failed');
     }
+    $sqlUsername = mysqli_real_escape_string($connection, $username);
+    $sqlPassword = mysqli_real_escape_string($connection, $password);
+    $hashFormat = "$2y$10$";
+    $salt="iusesomecrazystrings22";
+    $hashF_and_salt = $hashFormat . $salt;
+    //crypt hàm mã hoá password đi kèm với 1 hasformat và 22 ký tự alphabet ngẫu nhiên
+    $encript_password = crypt($sqlPassword, $hashF_and_salt);
     //Dùng dấu nháy kép với câu lệnh sql, dùng nháy đơn để đưa biến vào
-    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    $query = "INSERT INTO users (username, password) VALUES ('$sqlUsername', '$encript_password')";
     $result = mysqli_query($connection, $query);
     if($result) {
       echo 'Insert Done';
