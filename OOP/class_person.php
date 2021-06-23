@@ -1,27 +1,32 @@
 <?php
   class Person {
-    var $name;
-    var $age;
+    public $name;
+    public $age;
+    protected $address = 'Bach Mai';
+    private $university = 'BK';
 
-    function __construct($name, $age)
+    public function __construct($name, $age)
     {
       $this->name = $name;
       $this->age = $age;
     }
 
-    function saySomething() {
+    public function saySomething() {
       echo "Hello class";
     }
 
-    function set_name($name) {
+    public function set_name($name) {
       $this->name = $name;
     }
-    function get_name() {
+    public function get_name() {
       return $this->name;
+    }
+    public function getUni() {
+      return $this->university;
     }
   }
 
-  //Gọi Constructor khi khởi tạo instance
+  //Gọi hàm __constructor khi khởi tạo instance
   $studentA = new Person('Truong Nguyen', 24);
 
   //Gọi method
@@ -40,4 +45,49 @@
   echo "<br>";
   echo $studentA->get_name();
 
+  //có thể thay đổi property class từ bên ngoài nếu khai báo biến bằng từ khoá var
+  $studentA->name = 'abc';
+  echo "<br>";
+  echo $studentA->name;
+  echo "<br>";
 
+
+  //Kế thừa, Đóng gói
+  /*
+   * Public: Ở bên ngoài, bên trong, và class con đều có thể truy cập được
+   * Protected: Chỉ có bên trong, class con mới có thể truy cập
+   * Private: Chỉ có class đó mới có thể truy cập
+   * */
+  class Workers extends Person {
+    public $job;
+    public function __construct($name, $age, $job)
+    {
+      //gọi lại hàm construct của class cha mà không cần phải khai báo lại từ đầu
+      parent::__construct($name, $age);
+      $this->job = $job;
+    }
+    public function getAddress() {
+      echo parent::get_name();
+      return $this->address;
+    }
+  }
+
+  $workerA = new Workers('Tuan Ha', 25, 'Comtor');
+  echo $workerA->name;
+  echo "<br>";
+  echo $workerA->age;
+  echo "<br>";
+  echo $workerA->job;
+  echo "<br>";
+  echo $workerA->getAddress();
+  echo "<br>";
+  echo $workerA->getUni();
+
+  //Static Method (gọi trực tiếp hàm hoặc property từ class mà không phải tạo instance)
+  class Street {
+    public static function hello() {
+      echo "Hello Viet Nam";
+    }
+  }
+  echo "<br>";
+  Street::hello();
